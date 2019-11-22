@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div class="border-div">
+        <button id="clear-storage-btn">Clear memory</button>
+      </div>
+      <div class="border-div">
+        <h3>Diff</h3>
+        <p id="display-diff"></p>
+      </div>
+      <div class="border-div">
+        <h3>Set work hours</h3>
+        <input id="input-time" type="time" />
+        <button id="set-time-btn">Set time</button>
+        <p id="display-set-time"></p>
+      </div>
+      <div class="border-div">
+        <h3>Last login</h3>
+        <p id="display-start"></p>
+      </div>
+      <div class="border-div">
+        <h3>Last logout</h3>
+        <p id="display-stop"></p>
+      </div>
+      <div class="border-div">
+        <h3>Looper</h3>
+        <button type="button" id="start-time-btn">Start timer</button>
+        <button type="button" id="stop-time-btn">Stop timer</button>
+        <p id="display-timer"></p>
+      </div>
+    </div>
+    <script src="./js/helpers.js"></script>
+    <script src="./js/main.js"></script>
+  </body>
+</html>
