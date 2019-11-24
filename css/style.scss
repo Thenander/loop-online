@@ -1,5 +1,10 @@
+body {
+  background-color: #3f5d5d;
+}
+
 .border-div {
-  border: 1px solid #dadada;
+  background-color: #eeeeee;
+  // border: 1px solid #dadada;
   border-radius: 5px;
   padding: 8px 10px;
   margin: 10px 5px;
@@ -7,4 +12,9 @@
 
 h3 {
   margin: 0 0 10px 0;
+}
+
+h4 {
+  color: #c3c3c3;
+  margin: 0px 0px 0px 10px;
 }

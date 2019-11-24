@@ -1,3 +1,5 @@
+<!-- Beta version 0.9.1 -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,17 +12,14 @@
   <body>
     <div id="wrapper">
       <div class="border-div">
-        <button id="clear-storage-btn">Clear memory</button>
+        <h3>Looper</h3>
+        <button type="button" id="start-time-btn">Start timer</button>
+        <button type="button" id="stop-time-btn">Stop timer</button>
+        <p id="display-timer"></p>
       </div>
       <div class="border-div">
         <h3>Diff</h3>
         <p id="display-diff"></p>
-      </div>
-      <div class="border-div">
-        <h3>Set work hours</h3>
-        <input id="input-time" type="time" />
-        <button id="set-time-btn">Set time</button>
-        <p id="display-set-time"></p>
       </div>
       <div class="border-div">
         <h3>Last login</h3>
@@ -31,11 +30,18 @@
         <p id="display-stop"></p>
       </div>
       <div class="border-div">
-        <h3>Looper</h3>
-        <button type="button" id="start-time-btn">Start timer</button>
-        <button type="button" id="stop-time-btn">Stop timer</button>
-        <p id="display-timer"></p>
+        <h3>Set work hours (default 08:00)</h3>
+        <input id="input-time" type="time" />
+        <button id="set-time-btn">Set time</button>
+        <small
+          >Note! Can only be set BEFORE starting the looper on a new day.</small
+        >
+        <p id="display-set-time"></p>
       </div>
+      <div class="border-div">
+        <button id="clear-storage-btn">Clear memory</button>
+      </div>
+      <h4>Beta version 0.9.1</h4>
     </div>
     <script src="./js/helpers.js"></script>
     <script src="./js/main.js"></script>
