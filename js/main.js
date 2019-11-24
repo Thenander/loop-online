@@ -1,9 +1,14 @@
+// Beta version 0.9.1
+
 // LocalStorages
 const timeStart = 'time-start'
 const timeStop = 'time-stop'
 const timeWorkDay = 'time-workday'
 const timeDiff = 'time-diff'
 const timeIsLooping = 'time-is-looping'
+
+// Default workhours
+const def = timeToMs('08:00')
 
 // Timer
 let timer
@@ -42,11 +47,12 @@ const reset = items => {
   items.forEach(item => {
     if (lsGetter(item) === null) lsSetter(item, [new Date(0).getMilliseconds()])
   })
+  if (lsGetter(timeWorkDay) === null) lsSetter(timeWorkDay, [def])
   if (lsGetter(timeIsLooping) === null) lsSetter(timeIsLooping, isLooping)
 }
 
 window.onload = () => {
-  reset([timeStart, timeStop, timeWorkDay, timeDiff])
+  reset([timeStart, timeStop, timeDiff])
   isLooping = lsGetter(timeIsLooping)
   isLooping ? loopTimer() : (displayTimer.innerHTML = '')
   enableDisableBtn()
@@ -69,9 +75,14 @@ const displayLastDiff = () =>
 
 // Disable / Enable buttons
 const enableDisableBtn = () => {
+  const lastStop = dateCreator(getLastPost(timeStop))
+  const rightNow = dateCreator(Date.now())
+
   isLooping ? (btnTimeStart.disabled = true) : (btnTimeStart.disabled = false)
   isLooping ? (btnTimeStop.disabled = false) : (btnTimeStop.disabled = true)
-  isLooping ? (btnTimeSet.disabled = true) : (btnTimeSet.disabled = false)
+  isLooping || lastStop === rightNow
+    ? (btnTimeSet.disabled = true)
+    : (btnTimeSet.disabled = false)
   isLooping
     ? (btnClearStorage.disabled = true)
     : (btnClearStorage.disabled = false)
@@ -113,15 +124,24 @@ btnTimeStop.addEventListener('click', () => {
   displayLastDiff()
 })
 
-// Timer function // d=diff, s=start, w=workday, e=end, n=now, t=totaldiff
+// Timer function
 const loopTimer = () => {
-  const d = getLastPost(timeDiff)
-  const s = getLastPost(timeStart)
-  const w = getLastPost(timeWorkDay)
-  const e = s + w
-  const n = new Date(Date.now()).getTime()
-  const t = n - e + d
-  displayTimer.innerHTML = msToTime(t)
+  const last_time_stop = getLastPost(timeStop)
+  const last_time_start = getLastPost(timeStart)
+  const last_time_diff = getLastPost(timeDiff)
+  const last_work_day = getLastPost(timeWorkDay)
+  const evaluate_second_to_last_time_stop = dateCreator(last_time_stop)
+  const evaluate_last_time_start = dateCreator(last_time_start)
+  const right_now = new Date(Date.now()).getTime()
+
+  let diff
+
+  evaluate_second_to_last_time_stop === evaluate_last_time_start
+    ? (diff = right_now - last_time_start + last_time_diff)
+    : (diff = right_now - last_time_start - last_work_day + last_time_diff)
+
+  displayTimer.innerHTML = msToTime(diff)
+
   timer = setTimeout(() => {
     loopTimer()
   }, 1000)

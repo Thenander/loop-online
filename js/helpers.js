@@ -1,3 +1,5 @@
+// Beta version 0.9.1
+
 // LocalStorage
 const ls = window.localStorage
 
@@ -7,8 +9,17 @@ const lsGetter = key => JSON.parse(ls.getItem(key))
 
 const getTwoDigits = number => (number = number < 10 ? '0' + number : number)
 const getLastPost = key => lsGetter(key)[lsGetter(key).length - 1]
+const getSecondToLastPost = key => lsGetter(key)[lsGetter(key).length - 2]
 const getLength = key => lsGetter(key).length
 const setIsLooping = boo => lsSetter(timeIsLooping, boo)
+
+// Returns date in Swedish format
+const dateCreator = date => {
+  const year = new Date(date).getFullYear()
+  const month = new Date(date).getMonth() + 1
+  const day = new Date(date).getDate()
+  return year + '-' + month + '-' + day
+}
 
 /**
  * @param {string} timeStart key
@@ -16,13 +27,21 @@ const setIsLooping = boo => lsSetter(timeIsLooping, boo)
  * @param {string} timeDiff key
  */
 const diffTimeStamper = (timeStart, timeStop, timeDiff, timeWorkDay) => {
+  const secondToLast = getSecondToLastPost(timeStop)
   const lastTimeStart = getLastPost(timeStart)
   const lastTimeStop = getLastPost(timeStop)
   const lastTimeDiff = getLastPost(timeDiff)
   const workDay = getLastPost(timeWorkDay)
-  const diff = lastTimeStop - lastTimeStart - workDay + lastTimeDiff
-  const diffArray = lsGetter(timeDiff)
 
+  let diff
+  const comp1 = dateCreator(secondToLast)
+  const comp2 = dateCreator(lastTimeStart)
+
+  comp1 === comp2
+    ? (diff = lastTimeStop - lastTimeStart + lastTimeDiff)
+    : (diff = lastTimeStop - lastTimeStart - workDay + lastTimeDiff)
+
+  const diffArray = lsGetter(timeDiff)
   diffArray.push(diff)
   lsSetter(timeDiff, diffArray)
 }
