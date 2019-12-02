@@ -66,13 +66,13 @@ const timeToMs = time => {
 
 /**
  * @param {any} duration duration in milliseconds
- * @param {any} timeZone 'x' if CET, leave empty if UTC
+ * @param {any} timeZone 'CET' if CET, leave empty if UTC
  */
 const msToTime = (duration, timeZone) => {
   let sign = ''
   Math.sign(duration) === -1 && (sign = '-')
 
-  timeZone === 'x'
+  timeZone === 'CET'
     ? (duration = Math.abs(duration) + 3600000)
     : (duration = Math.abs(duration))
 

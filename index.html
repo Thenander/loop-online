@@ -7,43 +7,166 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="./css/style.css" />
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Cousine&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+
     <title>Document</title>
   </head>
   <body>
-    <div id="wrapper">
-      <div class="border-div">
-        <h3>Looper</h3>
-        <button type="button" id="start-time-btn">Start timer</button>
-        <button type="button" id="stop-time-btn">Stop timer</button>
-        <p id="display-timer"></p>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModalCenter"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">
+              All data will be lost!
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are your sure?
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary btn-sm"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              id="clear-storage-btn"
+              class="btn btn-danger btn-sm"
+            >
+              Clear memory
+            </button>
+          </div>
+        </div>
       </div>
+    </div>
+    <div id="wrapper" class="container">
       <div class="border-div">
-        <h3>Diff</h3>
-        <p id="display-diff"></p>
-      </div>
-      <div class="border-div">
-        <h3>Last login</h3>
-        <p id="display-start"></p>
-      </div>
-      <div class="border-div">
-        <h3>Last logout</h3>
-        <p id="display-stop"></p>
-      </div>
-      <div class="border-div">
-        <h3>Set work hours (default 08:00)</h3>
-        <input id="input-time" type="time" />
-        <button id="set-time-btn">Set time</button>
-        <small
-          >Note! Can only be set BEFORE starting the looper on a new day.</small
+        <button
+          type="button"
+          class="btn btn-primary btn-sm"
+          id="start-time-btn"
         >
-        <p id="display-set-time"></p>
+          Start timer
+        </button>
+        <button type="button" class="btn btn-primary btn-sm" id="stop-time-btn">
+          Stop timer
+        </button>
       </div>
       <div class="border-div">
-        <button id="clear-storage-btn">Clear memory</button>
+        <div id="progress" class="progress">
+          <div
+            id="progress-bar"
+            class="progress-bar"
+            role="progressbar"
+            aria-valuenow="0"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          ></div>
+        </div>
       </div>
-      <h4>Beta version 0.9.1</h4>
+      <div class="border-div two-in-one">
+        <p>Looper</p>
+        <!-- Side spinner -->
+        <div class="spinner-block">
+          <div id="looper" class="spinner spinner-1"></div>
+        </div>
+        <p id="display-timer" class="display-times"></p>
+      </div>
+      <div class="border-div two-in-one">
+        <p>Diff</p>
+        <p id="display-diff" class="display-times"></p>
+      </div>
+      <div class="border-div two-in-one">
+        <p>Last login</p>
+        <p id="display-start" class="display-times"></p>
+      </div>
+      <div class="border-div two-in-one">
+        <p>Last logout</p>
+        <p id="display-stop" class="display-times"></p>
+      </div>
+      <div class="border-div two-in-one">
+        <p>Calculated time to end work</p>
+        <p id="display-calc-end" class="display-times"></p>
+      </div>
+      <div class="border-div">
+        <div class="two-in-one">
+          <p>Set work hours (default 08:00)</p>
+          <p id="display-set-time" class="display-times"></p>
+        </div>
+        <input id="input-time" class="form-control" type="time" />
+        <button id="set-time-btn" class="btn btn-primary btn-sm">
+          Set time
+        </button>
+        <br />
+        <small>
+          Note! Can only be set BEFORE starting the looper on a new day.</small
+        >
+      </div>
+      <div class="border-div">
+        <!-- Button trigger modal -->
+        <button
+          id="clear-btn-modal"
+          type="button"
+          class="btn btn-danger btn-sm"
+          data-toggle="modal"
+          data-target="#exampleModalCenter"
+        >
+          Clear memory
+        </button>
+        <!-- <button id="clear-storage-btn" class="btn btn-danger btn-sm">
+          Clear memory
+        </button> -->
+      </div>
+      <div id="footer">
+        <small>Beta version 0.9.3</small>
+      </div>
     </div>
     <script src="./js/helpers.js"></script>
     <script src="./js/main.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

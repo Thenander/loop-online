@@ -1,3 +1,17 @@
+//variables
+$bg-color: #fff; //container background-color;
+$basic-dark-color: #6c757d; //color of the spinner
+$border-width: 4px; //width of spinners border
+$basic-spinner-dimensions: 24px; //width and height of spinner
+$main-spinner-dimensions: $basic-spinner-dimensions - $border-width * 2; //width and height of bigger circle
+$small-spinner-dimensions: $main-spinner-dimensions * 0.7; //width and height of smaller circle
+
+.marked-mono {
+  color: #ffffff;
+  background-color: #007bfe;
+  transition: 0.3s;
+}
+
 .border-div {
   border: 1px solid #dadada;
   border-radius: 5px;
@@ -12,4 +26,107 @@ h3 {
 h4 {
   color: #c3c3c3;
   margin: 0px 0px 0px 10px;
+}
+.two-in-one {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  p {
+    margin: 0;
+  }
+}
+
+#input-time {
+  display: inline;
+  width: auto;
+}
+
+#footer {
+  margin-top: -10px;
+  margin-left: 15px;
+}
+
+small {
+  color: darkgray;
+}
+
+.display-times {
+  border-radius: 50px;
+  font-family: 'Cousine', monospace;
+  font-size: 0.8rem;
+  padding: 1px 4px 0px 4px;
+  transition: 0.3s;
+}
+
+#progress-bar {
+  font-family: 'Cousine', monospace;
+  font-size: 0.5rem;
+}
+
+/* spinner style */
+.spinner {
+  position: relative;
+  width: $basic-spinner-dimensions;
+  height: $basic-spinner-dimensions;
+
+  &:before,
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 50%;
+  }
+}
+
+/* spinner-1 styles */
+.spinner-block {
+  margin-left: auto;
+}
+
+.spinner.spinner-1 {
+  @keyframes rotate-animation {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes anti-rotate-animation {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(-360deg);
+    }
+  }
+
+  &:before {
+    width: 24px;
+    height: 24px;
+    border-bottom-color: #e91e63;
+    border-right-color: #2196f3;
+    border-top-color: #4caf50;
+    border-left-color: #ffc107;
+    top: 0px;
+    left: 0px;
+    animation: rotate-animation 1s linear 0s infinite;
+  }
+
+  &:after {
+    width: 20px;
+    height: 20px;
+    border-bottom-color: #e91e63;
+    border-right-color: #2196f3;
+    border-top-color: #4caf50;
+    border-left-color: #ffc107;
+    top: ($main-spinner-dimensions - $small-spinner-dimensions) / 2;
+    left: ($main-spinner-dimensions - $small-spinner-dimensions) / 2;
+    animation: anti-rotate-animation 0.85s linear 0s infinite;
+  }
 }
