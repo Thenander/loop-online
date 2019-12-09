@@ -1,39 +1,5 @@
-// Beta version 0.9.1
-
-// LocalStorages
-const timeStart = 'time-start'
-const timeStop = 'time-stop'
-const timeWorkDay = 'time-workday'
-const timeDiff = 'time-diff'
-const timeIsLooping = 'time-is-looping'
-
 // Default workhours
 const def = timeToMs('08:00')
-
-// Timer
-let timer
-
-// isLooping-BOOLEAN
-let isLooping = false
-
-// Buttons
-const btnTimeStart = document.getElementById('start-time-btn')
-const btnTimeStop = document.getElementById('stop-time-btn')
-const btnTimeSet = document.getElementById('set-time-btn')
-const btnClearStorage = document.getElementById('clear-storage-btn')
-const clearBtnModal = document.getElementById('clear-btn-modal')
-
-// ***
-const wrapper = document.getElementById('wrapper')
-const inputTime = document.getElementById('input-time')
-const displayDiff = document.getElementById('display-diff')
-const displayStart = document.getElementById('display-start')
-const displayStop = document.getElementById('display-stop')
-const displayTimer = document.getElementById('display-timer')
-const displayCalcEnd = document.getElementById('display-calc-end')
-const progressBar = document.getElementById('progress-bar')
-const looper = document.getElementById('looper')
-const displaySetTime = document.getElementById('display-set-time')
 
 // Clear LocalStorage
 const clearLocalStorage = () => {
@@ -44,8 +10,27 @@ const clearLocalStorage = () => {
 
 btnClearStorage.addEventListener('click', () => {
   clearLocalStorage()
-  location.reload()
+
+  $('#modal').modal('hide')
+
+  const txt = 'Memory cleared'
+
+  const msg = '<div><h2>' + txt + '</h2></div>'
+
+  displaySavePopup(msg)
+  clear()
+
+  setTimeout(() => {
+    location.reload()
+  }, 1500)
 })
+
+async function clear() {
+  await setTimeout(() => {
+    console.log('wait...')
+  }, 1000)
+  console.log('hupp')
+}
 
 // Initialize
 const reset = items => {
@@ -63,7 +48,7 @@ window.onload = () => {
   enableDisableBtn()
   showSetTime()
   displayLastStart()
-  displayLastStop()
+  isLooping ? displayNonStop() : displayLastStop()
   isLooping
     ? looper.classList.add('spinner')
     : looper.classList.remove('spinner')
@@ -71,14 +56,16 @@ window.onload = () => {
 
 const displayLastStart = () =>
   getLastPost(timeStart) !== 0 &&
-  (displayStart.innerHTML = msToTime(getLastPost(timeStart), 'CET'))
+  (displayStart.innerHTML = msToDate(getLastPost(timeStart), 'CET'))
 
 const displayLastStop = () =>
   getLastPost(timeStop) !== 0 &&
-  (displayStop.innerHTML = msToTime(getLastPost(timeStop), 'CET'))
+  (displayStop.innerHTML = msToDate(getLastPost(timeStop), 'CET'))
+
+const displayNonStop = () => (displayStop.innerHTML = '')
 
 const displayLastDiff = () =>
-  (displayDiff.innerHTML = msToTime(getLastPost(timeDiff)))
+  (displayDiff.innerHTML = msToTimeSecs(getLastPost(timeDiff)))
 
 // Disable / Enable buttons
 const enableDisableBtn = () => {
@@ -90,24 +77,33 @@ const enableDisableBtn = () => {
   isLooping || lastStop === rightNow
     ? (btnTimeSet.disabled = true)
     : (btnTimeSet.disabled = false)
-  isLooping ? (clearBtnModal.disabled = true) : (clearBtnModal.disabled = false)
+  isLooping ? (btnClearModal.disabled = true) : (btnClearModal.disabled = false)
+  isLooping
+    ? (btnEditDiffTime.disabled = true)
+    : (btnEditDiffTime.disabled = false)
 }
 
 // Show how many hours to work
 const showSetTime = () => {
   const displaySetTime = document.getElementById('display-set-time')
-  const workingHours = msToTime(lsGetter(timeWorkDay), 0)
+  const workingHours = msToTime(lsGetter(timeWorkDay))
   displaySetTime.innerHTML = workingHours
 }
 
 // Set worktime
 btnTimeSet.addEventListener('click', () => {
-  // const displaySetTime = document.getElementById('display-set-time')
-  const ms = timeToMs(inputTime.value)
+  let ms
+  inputTime.value ? (ms = timeToMs(inputTime.value)) : (ms = 0) // Check if input is empty
 
-  markDisplay(displaySetTime)
   lsSetter(timeWorkDay, [ms])
+  const t = msToTime(ms)
+
+  const txt = 'Work hours:'
+  const msg = '<div><h5>' + txt + '</h5></div><div><h1>' + t + '</h1></div>'
+
+  displaySavePopup(msg)
   showSetTime()
+  markDisplay(displaySetTime)
   btnTimeStart.focus()
 })
 
@@ -122,6 +118,7 @@ const markDisplay = display => {
 // START LOOP
 btnTimeStart.addEventListener('click', () => {
   markDisplay(displayStart)
+  displayNonStop()
   timeArrayStamper(timeStart)
   isLooping = true
   setIsLooping(true)
@@ -168,7 +165,7 @@ const loopTimer = () => {
     displayDiff.style.color = '#27a745'
   } else if (diff < 0) displayDiff.style.color = '#dc3545'
 
-  displayDiff.innerHTML = msToTime(diff)
+  displayDiff.innerHTML = msToTimeSecs(diff)
   displayCalcEnd.innerHTML = endOfDay(right_now, diff)
   showProgress(right_now, last_time_start, diff)
 
@@ -203,3 +200,6 @@ const showProgress = (now, last_time_start, diff) => {
     progressBar.innerHTML = progress + '%'
   }
 }
+
+document.getElementById('footer').innerHTML =
+  '<small>Beta version ' + version + '</small>'

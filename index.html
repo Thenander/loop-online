@@ -1,5 +1,3 @@
-<!-- Beta version 0.9.1 -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -20,22 +18,24 @@
       crossorigin="anonymous"
     />
 
-    <title>Document</title>
+    <title>LOOP Beta</title>
   </head>
   <body>
-    <!-- Modal -->
+    <!-- Popup -->
+    <div id="pop-up" class="pop-up"></div>
+    <!-- Clear memory modal -->
     <div
       class="modal fade"
-      id="exampleModalCenter"
+      id="modal"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="exampleModalCenterTitle"
+      aria-labelledby="modalTitle"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">
+            <h5 class="modal-title" id="modal-title">
               All data will be lost!
             </h5>
             <button
@@ -53,35 +53,29 @@
           <div class="modal-footer">
             <button
               type="button"
-              class="btn btn-secondary btn-sm"
+              class="btn btn-secondary"
               data-dismiss="modal"
             >
               Close
             </button>
-            <button
-              type="button"
-              id="clear-storage-btn"
-              class="btn btn-danger btn-sm"
-            >
+            <button type="button" id="clear-storage-btn" class="btn btn-danger">
               Clear memory
             </button>
           </div>
         </div>
       </div>
     </div>
+    <!-- START / STOP -->
     <div id="wrapper" class="container">
       <div class="border-div">
-        <button
-          type="button"
-          class="btn btn-primary btn-sm"
-          id="start-time-btn"
-        >
+        <button type="button" class="btn btn-primary air" id="start-time-btn">
           Start timer
         </button>
-        <button type="button" class="btn btn-primary btn-sm" id="stop-time-btn">
+        <button type="button" class="btn btn-primary air" id="stop-time-btn">
           Stop timer
         </button>
       </div>
+      <!-- PROGRESS BAR -->
       <div class="border-div">
         <div id="progress" class="progress">
           <div
@@ -94,65 +88,99 @@
           ></div>
         </div>
       </div>
+      <!-- LOOPER -->
       <div class="border-div two-in-one">
         <p>Looper</p>
-        <!-- Side spinner -->
         <div class="spinner-block">
           <div id="looper" class="spinner spinner-1"></div>
         </div>
         <p id="display-timer" class="display-times"></p>
       </div>
+      <!-- DIFF -->
       <div class="border-div two-in-one">
         <p>Diff</p>
         <p id="display-diff" class="display-times"></p>
       </div>
+      <!-- LOGIN -->
       <div class="border-div two-in-one">
-        <p>Last login</p>
+        <p>Login</p>
         <p id="display-start" class="display-times"></p>
       </div>
+      <!-- LOGOUT -->
       <div class="border-div two-in-one">
-        <p>Last logout</p>
+        <p>Logout</p>
         <p id="display-stop" class="display-times"></p>
       </div>
+      <!-- END OF DAY -->
       <div class="border-div two-in-one">
         <p>Calculated time to end work</p>
         <p id="display-calc-end" class="display-times"></p>
       </div>
+      <!-- SET WORK HOURS -->
       <div class="border-div">
         <div class="two-in-one">
           <p>Set work hours (default 08:00)</p>
           <p id="display-set-time" class="display-times"></p>
         </div>
-        <input id="input-time" class="form-control" type="time" />
-        <button id="set-time-btn" class="btn btn-primary btn-sm">
-          Set time
-        </button>
-        <br />
+        <div id="form-plus-btn" class="input-group air">
+          <input id="input-time" class="form-control" type="time" />
+          <div class="input-group-append">
+            <button id="set-time-btn" class="btn btn-primary">
+              Set time
+            </button>
+          </div>
+        </div>
         <small>
           Note! Can only be set BEFORE starting the looper on a new day.</small
         >
       </div>
+      <!-- CLEAR MEMORY -->
       <div class="border-div">
-        <!-- Button trigger modal -->
         <button
-          id="clear-btn-modal"
+          id="btn-clear-modal"
           type="button"
-          class="btn btn-danger btn-sm"
+          class="btn btn-danger air"
           data-toggle="modal"
-          data-target="#exampleModalCenter"
+          data-target="#modal"
         >
           Clear memory
         </button>
-        <!-- <button id="clear-storage-btn" class="btn btn-danger btn-sm">
-          Clear memory
-        </button> -->
       </div>
-      <div id="footer">
-        <small>Beta version 0.9.3</small>
+      <!-- CHANGE HISTORY -->
+      <div class="border-div">
+        <div class="two-in-one">
+          <p>Manually change diff</p>
+          <p id="display-edited-diff" class="display-times"></p>
+        </div>
+        <div id="form-plus-btn" class="input-group edit-diff-container air">
+          <input id="diff-input" class="diff-inputs form-control" type="time" />
+          <div class="input-group-append">
+            <button
+              type="button"
+              id="edit-diff-time-btn"
+              class="btn btn-primary btn-sm"
+            >
+              Change
+            </button>
+          </div>
+        </div>
+        <input
+          type="checkbox"
+          name="edit-diff-time-chbx"
+          id="edit-diff-time-chbx"
+        />
+        <label for="edit-diff-time-chbx"
+          >Negative time <small> - Click to add subtraction :-)</small></label
+        >
       </div>
+      <!-- FOOTER -->
+      <div id="footer"></div>
     </div>
+    <script src="./js/variables.js"></script>
     <script src="./js/helpers.js"></script>
     <script src="./js/main.js"></script>
+    <script src="./js/modal.js"></script>
+    <script src="./js/difference.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

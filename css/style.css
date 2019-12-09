@@ -37,9 +37,8 @@ h4 {
   margin: 0;
 }
 
-#input-time {
-  display: inline;
-  width: auto;
+.air {
+  margin: 2px 0;
 }
 
 #footer {
@@ -55,7 +54,7 @@ small {
   border-radius: 50px;
   font-family: 'Cousine', monospace;
   font-size: 0.8rem;
-  padding: 1px 4px 0px 4px;
+  padding: 1px 7px 0px 7px;
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
@@ -154,5 +153,54 @@ small {
   left: 2.4px;
   -webkit-animation: anti-rotate-animation 0.85s linear 0s infinite;
           animation: anti-rotate-animation 0.85s linear 0s infinite;
+}
+
+#form-plus-btn {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.pop-up {
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100px;
+  width: 300px;
+  background-color: #dc3545;
+  border-radius: 5px;
+  color: #ffffff;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -150px;
+  position: fixed;
+  z-index: 1000;
+}
+
+.pop-up div {
+  margin: -5px;
+}
+
+.pop-up div h1,
+.pop-up div h2,
+.pop-up div h3,
+.pop-up div h4,
+.pop-up div h5 {
+  color: #ffffff;
+}
+
+.pop-up-visible {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 /*# sourceMappingURL=style.css.map */

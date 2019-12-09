@@ -36,9 +36,8 @@ h4 {
   }
 }
 
-#input-time {
-  display: inline;
-  width: auto;
+.air {
+  margin: 2px 0;
 }
 
 #footer {
@@ -54,7 +53,7 @@ small {
   border-radius: 50px;
   font-family: 'Cousine', monospace;
   font-size: 0.8rem;
-  padding: 1px 4px 0px 4px;
+  padding: 1px 7px 0px 7px;
   transition: 0.3s;
 }
 
@@ -129,4 +128,40 @@ small {
     left: ($main-spinner-dimensions - $small-spinner-dimensions) / 2;
     animation: anti-rotate-animation 0.85s linear 0s infinite;
   }
+}
+
+#form-plus-btn {
+  width: fit-content;
+}
+
+.pop-up {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 300px;
+  background-color: #dc3545;
+  border-radius: 5px;
+  color: #ffffff;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -150px;
+  position: fixed;
+  z-index: 1000;
+  div {
+    margin: -5px;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      color: #ffffff;
+    }
+  }
+}
+
+.pop-up-visible {
+  display: flex;
 }
