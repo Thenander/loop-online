@@ -65,8 +65,11 @@
         </div>
       </div>
     </div>
-    <!-- START / STOP -->
     <div id="wrapper" class="container">
+      <div class="border-div">
+        <div id="display-clock" class="display-times"></div>
+      </div>
+      <!-- START / STOP -->
       <div class="border-div">
         <button type="button" class="btn btn-primary air" id="start-time-btn">
           Start timer
@@ -74,6 +77,11 @@
         <button type="button" class="btn btn-primary air" id="stop-time-btn">
           Stop timer
         </button>
+      </div>
+      <!-- LIST LOGINS AND LOGOUTS -->
+      <div class="border-div two-in-one">
+        <div id="display-list-start" class="display-times"></div>
+        <div id="display-list-stop" class="display-times"></div>
       </div>
       <!-- PROGRESS BAR -->
       <div class="border-div">
@@ -176,10 +184,11 @@
       <!-- FOOTER -->
       <div id="footer"></div>
     </div>
-    <script src="./js/variables.js"></script>
+    <!-- SCRIPTS -->
     <script src="./js/helpers.js"></script>
+    <script src="./js/variables.js"></script>
+    <script src="./js/clock.js"></script>
     <script src="./js/main.js"></script>
-    <script src="./js/modal.js"></script>
     <script src="./js/difference.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

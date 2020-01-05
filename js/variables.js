@@ -1,6 +1,9 @@
 // Version
 const version = '0.9.4'
 
+// Deafault hours
+const def = timeToMs('08:00')
+
 // LocalStorages
 const timeDiff = 'time-diff'
 const timeStop = 'time-stop'
@@ -31,6 +34,9 @@ const displayStart = document.getElementById('display-start')
 const displaySetTime = document.getElementById('display-set-time')
 const displayCalcEnd = document.getElementById('display-calc-end')
 const displayEditedDiff = document.getElementById('display-edited-diff')
+const displayListStart = document.getElementById('display-list-start')
+const displayListStop = document.getElementById('display-list-stop')
+const displayClock = document.getElementById('display-clock')
 
 // Areas and popups
 const wrapper = document.getElementById('wrapper')
@@ -41,3 +47,7 @@ const popUp = document.getElementById('pop-up')
 // Inputs
 const inputTime = document.getElementById('input-time')
 const diffInput = document.getElementById('diff-input')
+
+// Lists
+const loopIns = lsGetter(timeStart)
+const loopOuts = lsGetter(timeStop)

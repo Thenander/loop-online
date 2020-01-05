@@ -20,28 +20,30 @@ const dateCreator = date => {
 }
 
 /**
- * @param {string} timeStart key
- * @param {string} timeStop key
- * @param {string} timeDiff key
+ * Sets a new diff calculated on logins/logouts
+ * @param {string} s timeStart (Key)
+ * @param {string} t timeStop (Key)
+ * @param {string} d timeDiff (Key)
+ * @param {string} w timeWorkDay (Key)
  */
-const diffTimeStamper = (timeStart, timeStop, timeDiff, timeWorkDay) => {
-  const secondToLast = getSecondToLastPost(timeStop)
-  const lastTimeStart = getLastPost(timeStart)
-  const lastTimeStop = getLastPost(timeStop)
-  const lastTimeDiff = getLastPost(timeDiff)
-  const workDay = getLastPost(timeWorkDay)
+const diffTimeStamper = (s, t, d, w) => {
+  const secondToLast = getSecondToLastPost(t)
+  const lastS = getLastPost(s)
+  const lastT = getLastPost(t)
+  const lastD = getLastPost(d)
+  const lastW = getLastPost(w)
 
-  let diff
-  const comp1 = dateCreator(secondToLast)
-  const comp2 = dateCreator(lastTimeStart)
+  let totD // Diff
+  const c1 = dateCreator(secondToLast) // Comparer 1
+  const c2 = dateCreator(lastS) // Comparer 2
 
-  comp1 === comp2
-    ? (diff = lastTimeStop - lastTimeStart + lastTimeDiff)
-    : (diff = lastTimeStop - lastTimeStart - workDay + lastTimeDiff)
+  c1 === c2
+    ? (totD = lastT - lastS + lastD)
+    : (totD = lastT - lastS - lastW + lastD)
 
-  const diffArray = lsGetter(timeDiff)
-  diffArray.push(diff)
-  lsSetter(timeDiff, diffArray)
+  const dArr = lsGetter(d)
+  dArr.push(totD)
+  lsSetter(d, dArr)
 }
 
 const timeArrayStamper = key => {
@@ -147,7 +149,7 @@ const msToDate = (duration, timeZone) => {
   const year = date.getFullYear()
   const monthNumber = date.getMonth()
 
-  const month = monthArray[monthNumber - 1]
+  const month = monthArray[monthNumber]
 
   const dateNo = date.getDate()
   const day = date.getDay()
@@ -174,4 +176,26 @@ const displaySavePopup = msg => {
   setTimeout(() => {
     popUp.classList.remove('pop-up-visible')
   }, 2000)
+}
+
+/**
+ * Returns an array of the last X logins/logouts
+ * @param {number} num The number of logins/logouts to show
+ * @param {string} x "i" for logIns, "o" for logOuts
+ */
+const listLastLogs = (num, x) => {
+  let fullArray = []
+  const arr = []
+
+  if (x === 'i') fullArray = lsGetter(timeStart)
+  else if (x === 'o') fullArray = lsGetter(timeStop)
+  else return
+
+  if (fullArray !== null) {
+    let startNo = fullArray.length - num
+    startNo < 1 && (startNo = 1)
+    for (let i = startNo; i < fullArray.length; i++) arr.push(fullArray[i])
+  }
+
+  return arr
 }

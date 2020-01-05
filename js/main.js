@@ -1,6 +1,3 @@
-// Default workhours
-const def = timeToMs('08:00')
-
 // Clear LocalStorage
 const clearLocalStorage = () => {
   const vars = [timeStart, timeStop, timeWorkDay, timeDiff, timeIsLooping]
@@ -18,19 +15,11 @@ btnClearStorage.addEventListener('click', () => {
   const msg = '<div><h2>' + txt + '</h2></div>'
 
   displaySavePopup(msg)
-  clear()
 
   setTimeout(() => {
     location.reload()
   }, 1500)
 })
-
-async function clear() {
-  await setTimeout(() => {
-    console.log('wait...')
-  }, 1000)
-  console.log('hupp')
-}
 
 // Initialize
 const reset = items => {
@@ -42,6 +31,8 @@ const reset = items => {
 }
 
 window.onload = () => {
+  clock()
+  showLoginsAndLogouts()
   reset([timeStart, timeStop, timeDiff])
   isLooping = lsGetter(timeIsLooping)
   isLooping ? loopTimer() : displayLastDiff()
@@ -125,6 +116,7 @@ btnTimeStart.addEventListener('click', () => {
   enableDisableBtn()
   loopTimer()
   displayLastStart()
+  showLoginsAndLogouts()
   looper.classList.add('spinner')
 })
 
@@ -139,6 +131,8 @@ btnTimeStop.addEventListener('click', () => {
   clearTimeout(timer)
   displayLastStop()
   displayLastDiff()
+  showLoginsAndLogouts()
+  displayCalcEnd.innerHTML = ''
   looper.classList.remove('spinner')
   progressBar.classList.remove('progress-bar-striped')
   progressBar.classList.remove('progress-bar-animated')
@@ -203,3 +197,30 @@ const showProgress = (now, last_time_start, diff) => {
 
 document.getElementById('footer').innerHTML =
   '<small>Beta version ' + version + '</small>'
+
+/**
+ * Displays a list of the latest logins and logouts
+ */
+const showLoginsAndLogouts = () => {
+  const logs = 5
+  const ins = listLastLogs(logs, 'i')
+  const outs = listLastLogs(logs, 'o')
+
+  if (outs.length === logs)
+    ins[ins.length - 1] > outs[outs.length - 1] && outs.shift()
+
+  const func = arr => {
+    let lString = ''
+    lString += '<ul>'
+    for (let i = 0; i < arr.length; i++) {
+      const stamp = arr[i]
+      lString += '<li>'
+      lString += msToTimeSecs(stamp, 'CET')
+      lString += '</li>'
+    }
+    lString += '</ul>'
+    return lString
+  }
+  displayListStart.innerHTML = func(ins)
+  displayListStop.innerHTML = func(outs)
+}
