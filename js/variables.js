@@ -1,7 +1,8 @@
 // Version
-const version = '0.9.41'
+const version = '0.9.5'
+const gitCommit = 'Version ' + version + ', Clear last post, Copy to clipboard.'
 
-// Deafault hours
+// Default hours
 const def = timeToMs('08:00')
 
 // LocalStorages
@@ -23,6 +24,7 @@ const btnTimeStop = document.getElementById('stop-time-btn')
 const btnTimeStart = document.getElementById('start-time-btn')
 const btnClearModal = document.getElementById('btn-clear-modal')
 const btnClearStorage = document.getElementById('clear-storage-btn')
+const btnClearLastPost = document.getElementById('clear-last-post-btn')
 const btnEditDiffTime = document.getElementById('edit-diff-time-btn')
 const minusCheckBox = document.getElementById('edit-diff-time-chbx')
 
@@ -36,7 +38,9 @@ const displayCalcEnd = document.getElementById('display-calc-end')
 const displayEditedDiff = document.getElementById('display-edited-diff')
 const displayListStart = document.getElementById('display-list-start')
 const displayListStop = document.getElementById('display-list-stop')
+const displayListDiff = document.getElementById('display-list-diff')
 const displayClock = document.getElementById('display-clock')
+const listLogs = document.getElementById('list-logs')
 
 // Areas and popups
 const wrapper = document.getElementById('wrapper')

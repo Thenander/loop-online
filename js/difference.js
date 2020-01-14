@@ -26,7 +26,8 @@ const setNewDiffTime = () => {
     '<div><h5>' + txt + '</h5></div><div><h1>' + newDiffInTime + '</h1></div>'
 
   resetDiffTimeEditor()
-  displaySavePopup(msg)
+  setTimeout(() => location.reload(), 1500)
+  displayPopUp(msg)
 
   displayDiff.innerHTML = newDiffInTime
   document.getElementById('start-time-btn').focus()

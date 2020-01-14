@@ -6,9 +6,21 @@ $basic-spinner-dimensions: 24px; //width and height of spinner
 $main-spinner-dimensions: $basic-spinner-dimensions - $border-width * 2; //width and height of bigger circle
 $small-spinner-dimensions: $main-spinner-dimensions * 0.7; //width and height of smaller circle
 
+// Color of the year 2020
+$pantone2020: #1d4e89; // Classic blue
+
+.btn-primary {
+  background-color: $pantone2020 !important;
+  border-color: $pantone2020 !important;
+  &:hover {
+    background-color: lighten($color: $pantone2020, $amount: 10%) !important;
+    border-color: lighten($color: $pantone2020, $amount: 10%) !important;
+  }
+}
+
 .marked-mono {
   color: #ffffff;
-  background-color: #007bfe;
+  background-color: $pantone2020;
   transition: 0.3s;
 }
 
@@ -141,8 +153,7 @@ small {
   align-items: center;
   height: 100px;
   width: 300px;
-  // background-color: #dc3545;
-  background-color: #4caf50;
+  background-color: $pantone2020;
   border-radius: 5px;
   color: #ffffff;
   top: 50%;
@@ -165,4 +176,25 @@ small {
 
 .pop-up-visible {
   display: flex;
+}
+
+#list-logs {
+  align-items: unset;
+  div {
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+.greenBG {
+  background-color: #28a745;
+  color: #ffffff;
+  border-color: #28a745;
+}
+
+#git {
+  cursor: pointer;
 }

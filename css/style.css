@@ -1,6 +1,16 @@
+.btn-primary {
+  background-color: #1d4e89 !important;
+  border-color: #1d4e89 !important;
+}
+
+.btn-primary:hover {
+  background-color: #2666b3 !important;
+  border-color: #2666b3 !important;
+}
+
 .marked-mono {
   color: #ffffff;
-  background-color: #007bfe;
+  background-color: #1d4e89;
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
@@ -175,7 +185,7 @@ small {
           align-items: center;
   height: 100px;
   width: 300px;
-  background-color: #4caf50;
+  background-color: #1d4e89;
   border-radius: 5px;
   color: #ffffff;
   top: 50%;
@@ -202,5 +212,27 @@ small {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+#list-logs {
+  -webkit-box-align: unset;
+      -ms-flex-align: unset;
+          align-items: unset;
+}
+
+#list-logs div ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.greenBG {
+  background-color: #28a745;
+  color: #ffffff;
+  border-color: #28a745;
+}
+
+#git {
+  cursor: pointer;
 }
 /*# sourceMappingURL=style.css.map */

@@ -79,9 +79,10 @@
         </button>
       </div>
       <!-- LIST LOGINS AND LOGOUTS -->
-      <div class="border-div two-in-one">
+      <div id="list-logs" class="border-div two-in-one">
         <div id="display-list-start" class="display-times"></div>
         <div id="display-list-stop" class="display-times"></div>
+        <div id="display-list-diff" class="display-times"></div>
       </div>
       <!-- PROGRESS BAR -->
       <div class="border-div">
@@ -152,6 +153,16 @@
           data-target="#modal"
         >
           Clear memory
+        </button>
+      </div>
+      <!-- CLEAR LAST POST -->
+      <div class="border-div">
+        <button
+          id="clear-last-post-btn"
+          type="button"
+          class="btn btn-danger air"
+        >
+          Clear Last Post
         </button>
       </div>
       <!-- CHANGE HISTORY -->

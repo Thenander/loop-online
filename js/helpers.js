@@ -170,7 +170,7 @@ const msToDate = (duration, timeZone) => {
 /**
  * @param {any} msg Message to be displayed in popup (Please include tags. Ex '<h1>Success!</h1>')
  */
-const displaySavePopup = msg => {
+const displayPopUp = msg => {
   popUp.innerHTML = msg
   popUp.classList.add('pop-up-visible')
   setTimeout(() => {
@@ -179,23 +179,26 @@ const displaySavePopup = msg => {
 }
 
 /**
- * Returns an array of the last X logins/logouts
- * @param {number} num The number of logins/logouts to show
- * @param {string} x "i" for logIns, "o" for logOuts
+ * Copy to clipboard-function
+ * @param {String} str The string that you want copied
  */
-const listLastLogs = (num, x) => {
-  let fullArray = []
-  const arr = []
-
-  if (x === 'i') fullArray = lsGetter(timeStart)
-  else if (x === 'o') fullArray = lsGetter(timeStop)
-  else return
-
-  if (fullArray !== null) {
-    let startNo = fullArray.length - num
-    startNo < 1 && (startNo = 1)
-    for (let i = startNo; i < fullArray.length; i++) arr.push(fullArray[i])
+const copyToClipboard = str => {
+  const el = document.createElement('textarea') // Create a <textarea> element
+  el.value = str // Set its value to the string that you want copied
+  el.setAttribute('readonly', '') // Make it readonly to be tamper-proof
+  el.style.position = 'absolute'
+  el.style.left = '-9999px' // Move outside the screen to make it invisible
+  document.body.appendChild(el) // Append the <textarea> element to the HTML document
+  const selected =
+    document.getSelection().rangeCount > 0 // Check if there is any content selected previously
+      ? document.getSelection().getRangeAt(0) // Store selection if found
+      : false // Mark as false to know no selection existed before
+  el.select() // Select the <textarea> content
+  document.execCommand('copy') // Copy - only works as a result of a user action (e.g. click events)
+  document.body.removeChild(el) // Remove the <textarea> element
+  if (selected) {
+    // If a selection existed before copying
+    document.getSelection().removeAllRanges() // Unselect everything on the HTML document
+    document.getSelection().addRange(selected) // Restore the original selection
   }
-
-  return arr
 }

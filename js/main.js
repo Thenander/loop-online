@@ -6,19 +6,34 @@ const clearLocalStorage = () => {
 }
 
 btnClearStorage.addEventListener('click', () => {
-  clearLocalStorage()
-
-  $('#modal').modal('hide')
-
   const txt = 'Memory cleared'
-
   const msg = '<div><h2>' + txt + '</h2></div>'
+  clearLocalStorage()
+  $('#modal').modal('hide')
+  setTimeout(() => location.reload(), 1500)
+  displayPopUp(msg)
+})
 
-  displaySavePopup(msg)
+// Clear last post
+const clearLastPost = () => {
+  const starts = lsGetter(timeStart)
+  const stops = lsGetter(timeStop)
+  const diffs = lsGetter(timeDiff)
+  const lastPosts = [starts, stops, diffs]
+  if (diffs.length > 1) lastPosts.forEach(posts => posts.pop())
+  lsSetter(timeStart, starts)
+  lsSetter(timeStop, stops)
+  lsSetter(timeDiff, diffs)
+}
 
-  setTimeout(() => {
-    location.reload()
-  }, 1500)
+btnClearLastPost.addEventListener('click', () => {
+  const diffLength = lsGetter(timeDiff).length
+  let txt
+  diffLength <= 1 ? (txt = 'Nothing to clear!') : (txt = 'Last post cleared!')
+  const msg = '<div><h2>' + txt + '</h2></div>'
+  clearLastPost()
+  setTimeout(() => location.reload(), 1500)
+  displayPopUp(msg)
 })
 
 // Initialize
@@ -32,7 +47,7 @@ const reset = items => {
 
 window.onload = () => {
   clock()
-  showLoginsAndLogouts()
+  showInsAndOutsAndDiffs()
   reset([timeStart, timeStop, timeDiff])
   isLooping = lsGetter(timeIsLooping)
   isLooping ? loopTimer() : displayLastDiff()
@@ -70,6 +85,9 @@ const enableDisableBtn = () => {
     : (btnTimeSet.disabled = false)
   isLooping ? (btnClearModal.disabled = true) : (btnClearModal.disabled = false)
   isLooping
+    ? (btnClearLastPost.disabled = true)
+    : (btnClearLastPost.disabled = false)
+  isLooping
     ? (btnEditDiffTime.disabled = true)
     : (btnEditDiffTime.disabled = false)
 }
@@ -92,7 +110,7 @@ btnTimeSet.addEventListener('click', () => {
   const txt = 'Work hours:'
   const msg = '<div><h5>' + txt + '</h5></div><div><h1>' + t + '</h1></div>'
 
-  displaySavePopup(msg)
+  displayPopUp(msg)
   showSetTime()
   markDisplay(displaySetTime)
   btnTimeStart.focus()
@@ -116,7 +134,7 @@ btnTimeStart.addEventListener('click', () => {
   enableDisableBtn()
   loopTimer()
   displayLastStart()
-  showLoginsAndLogouts()
+  showInsAndOutsAndDiffs()
   looper.classList.add('spinner')
 })
 
@@ -131,7 +149,7 @@ btnTimeStop.addEventListener('click', () => {
   clearTimeout(timer)
   displayLastStop()
   displayLastDiff()
-  showLoginsAndLogouts()
+  showInsAndOutsAndDiffs()
   displayCalcEnd.innerHTML = ''
   looper.classList.remove('spinner')
   progressBar.classList.remove('progress-bar-striped')
@@ -196,31 +214,83 @@ const showProgress = (now, last_time_start, diff) => {
 }
 
 document.getElementById('footer').innerHTML =
-  '<small>Beta version ' + version + '</small>'
+  '<small>Beta version ' +
+  version +
+  '<br /> GIT msg: </small><small id="git">' +
+  gitCommit +
+  '</small><small> - - - Click to copy to clipboard.</small>'
+
+document.getElementById('footer').addEventListener('click', () => {
+  copyToClipboard(document.getElementById('git').innerText)
+  document.getElementById('footer').innerHTML =
+    '<small>Beta version ' + version + '</small>'
+})
 
 /**
  * Displays a list of the latest logins and logouts
  */
-const showLoginsAndLogouts = () => {
-  const logs = 5
-  const ins = listLastLogs(logs, 'i')
-  const outs = listLastLogs(logs, 'o')
+const showInsAndOutsAndDiffs = () => {
+  const logCount = 5
+  const ins = listLastLogs(logCount, 'i')
+  const outs = listLastLogs(logCount, 'o')
+  const diffs = listLastLogs(logCount, 'd')
 
-  if (outs.length === logs)
-    ins[ins.length - 1] > outs[outs.length - 1] && outs.shift()
+  if (outs.arr.length === logCount) {
+    ins.arr[ins.arr.length - 1] > outs.arr[outs.arr.length - 1] &&
+      outs.arr.shift()
+    ins.arr[ins.arr.length - 1] > outs.arr[outs.arr.length - 1] &&
+      diffs.arr.shift()
+  }
 
-  const func = arr => {
+  const func = (arr, label) => {
     let lString = ''
+
+    if (arr.length > 0) lString += '<h5>' + label + '</h5>'
+
     lString += '<ul>'
     for (let i = 0; i < arr.length; i++) {
       const stamp = arr[i]
       lString += '<li>'
-      lString += msToTimeSecs(stamp, 'CET')
+      if (stamp > 86400000) lString += msToDate(stamp, 'CET')
+      else lString += msToTimeSecs(stamp)
       lString += '</li>'
     }
     lString += '</ul>'
     return lString
   }
-  displayListStart.innerHTML = func(ins)
-  displayListStop.innerHTML = func(outs)
+
+  displayListStart.innerHTML = func(ins.arr, ins.label)
+  displayListStop.innerHTML = func(outs.arr, outs.label)
+  displayListDiff.innerHTML = func(diffs.arr, diffs.label)
+  if (diffs.arr[diffs.arr.length - 1] > 0) listLogs.classList.add('greenBG')
+}
+
+/**
+ * Returns an object with an array of the last logins/logouts and a label for the header
+ * @param {number} num The number of logins/logouts to show
+ * @param {string} x "i" for logIns, "o" for logOuts
+ */
+const listLastLogs = (num, x) => {
+  let label
+  let fullArray = []
+  const arr = []
+
+  if (x === 'i') {
+    fullArray = lsGetter(timeStart)
+    label = 'LOGIN'
+  } else if (x === 'o') {
+    fullArray = lsGetter(timeStop)
+    label = 'LOGOUT'
+  } else if (x === 'd') {
+    fullArray = lsGetter(timeDiff)
+    label = 'DIFF'
+  } else return
+
+  if (fullArray !== null) {
+    let startNo = fullArray.length - num
+    startNo < 1 && (startNo = 1)
+    for (let i = startNo; i < fullArray.length; i++) arr.push(fullArray[i])
+  }
+
+  return { arr, label }
 }
