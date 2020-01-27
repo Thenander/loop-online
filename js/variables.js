@@ -1,6 +1,6 @@
 // Version
-const version = '0.9.5'
-const gitCommit = 'Version ' + version + ', Clear last post, Copy to clipboard.'
+const version = '0.9.6'
+const gitCommit = 'Version ' + version + ''
 
 // Default hours
 const def = timeToMs('08:00')

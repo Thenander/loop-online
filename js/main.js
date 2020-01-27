@@ -47,7 +47,7 @@ const reset = items => {
 
 window.onload = () => {
   clock()
-  showInsAndOutsAndDiffs()
+  displayLastInsAndOutsAndDiffs()
   reset([timeStart, timeStop, timeDiff])
   isLooping = lsGetter(timeIsLooping)
   isLooping ? loopTimer() : displayLastDiff()
@@ -134,7 +134,7 @@ btnTimeStart.addEventListener('click', () => {
   enableDisableBtn()
   loopTimer()
   displayLastStart()
-  showInsAndOutsAndDiffs()
+  displayLastInsAndOutsAndDiffs()
   looper.classList.add('spinner')
 })
 
@@ -149,7 +149,7 @@ btnTimeStop.addEventListener('click', () => {
   clearTimeout(timer)
   displayLastStop()
   displayLastDiff()
-  showInsAndOutsAndDiffs()
+  displayLastInsAndOutsAndDiffs()
   displayCalcEnd.innerHTML = ''
   looper.classList.remove('spinner')
   progressBar.classList.remove('progress-bar-striped')
@@ -216,9 +216,9 @@ const showProgress = (now, last_time_start, diff) => {
 document.getElementById('footer').innerHTML =
   '<small>Beta version ' +
   version +
-  '<br /> GIT msg: </small><small id="git">' +
+  '<br /> GIT msg // </small><small id="git">' +
   gitCommit +
-  '</small><small> - - - Click to copy to clipboard.</small>'
+  '</small><small> // Click to copy to clipboard.</small>'
 
 document.getElementById('footer').addEventListener('click', () => {
   copyToClipboard(document.getElementById('git').innerText)
@@ -226,10 +226,7 @@ document.getElementById('footer').addEventListener('click', () => {
     '<small>Beta version ' + version + '</small>'
 })
 
-/**
- * Displays a list of the latest logins and logouts
- */
-const showInsAndOutsAndDiffs = () => {
+const displayLastInsAndOutsAndDiffs = () => {
   const logCount = 5
   const ins = listLastLogs(logCount, 'i')
   const outs = listLastLogs(logCount, 'o')
@@ -275,16 +272,20 @@ const listLastLogs = (num, x) => {
   let fullArray = []
   const arr = []
 
-  if (x === 'i') {
-    fullArray = lsGetter(timeStart)
-    label = 'LOGIN'
-  } else if (x === 'o') {
-    fullArray = lsGetter(timeStop)
-    label = 'LOGOUT'
-  } else if (x === 'd') {
-    fullArray = lsGetter(timeDiff)
-    label = 'DIFF'
-  } else return
+  switch (x) {
+    case 'i':
+      fullArray = lsGetter(timeStart)
+      label = 'LOGIN'
+      break
+    case 'o':
+      fullArray = lsGetter(timeStop)
+      label = 'LOGOUT'
+      break
+    case 'd':
+      fullArray = lsGetter(timeDiff)
+      label = 'DIFF'
+      break
+  }
 
   if (fullArray !== null) {
     let startNo = fullArray.length - num
