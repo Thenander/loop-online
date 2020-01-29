@@ -121,7 +121,7 @@ const markDisplay = display => {
   display.classList.add('marked-mono')
   setTimeout(() => {
     display.classList.remove('marked-mono')
-  }, 500)
+  }, 1000)
 }
 
 // START LOOP
@@ -183,7 +183,7 @@ const loopTimer = () => {
 
   timer = setTimeout(() => {
     loopTimer()
-  }, 100)
+  }, 1000)
 }
 
 // End of day // Returnerar dagsavslut om loopen är igång. Annars FALSE.
