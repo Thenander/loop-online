@@ -1,4 +1,6 @@
 //variables
+$light-grey: #e9ecef;
+$border-color: #dadada;
 $bg-color: #fff; //container background-color;
 $basic-dark-color: #6c757d; //color of the spinner
 $border-width: 4px; //width of spinners border
@@ -25,7 +27,7 @@ $pantone2020: #1d4e89; // Classic blue
 }
 
 .border-div {
-  border: 1px solid #dadada;
+  border: 1px solid $border-color;
   border-radius: 5px;
   padding: 8px 10px;
   margin: 10px 5px;
@@ -180,6 +182,9 @@ small {
 
 #list-logs {
   align-items: unset;
+  #display-list-diff {
+    text-align: right;
+  }
   div {
     ul {
       list-style-type: none;
@@ -190,9 +195,7 @@ small {
 }
 
 .greenBG {
-  background-color: #28a745;
-  color: #ffffff;
-  border-color: #28a745;
+  background-color: $light-grey;
 }
 
 #git {

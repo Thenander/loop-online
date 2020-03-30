@@ -1,5 +1,5 @@
 // Version
-const version = '0.9.6'
+const version = '0.9.7'
 const gitCommit = 'Version ' + version + ''
 
 // Default hours
@@ -40,6 +40,8 @@ const displayListStart = document.getElementById('display-list-start')
 const displayListStop = document.getElementById('display-list-stop')
 const displayListDiff = document.getElementById('display-list-diff')
 const displayClock = document.getElementById('display-clock')
+const displayToday = document.getElementById('display-today')
+const listDays = document.getElementById('list-days')
 const listLogs = document.getElementById('list-logs')
 
 // Areas and popups
@@ -55,3 +57,19 @@ const diffInput = document.getElementById('diff-input')
 // Lists
 const loopIns = lsGetter(timeStart)
 const loopOuts = lsGetter(timeStop)
+
+// Days and months
+const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'September',
+  'October',
+  'November',
+  'December'
+]
+const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']

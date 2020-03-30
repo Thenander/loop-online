@@ -58,6 +58,7 @@ const timeArrayStamper = key => {
  * Returns a number in milliseconds
  * @param {string} time The time in format 'HH:MM'
  * @param {boolean} isNegative true if negative, false otherwise
+ * @returns {number} milliseconds
  */
 const timeToMs = (time, isNegative) => {
   const timeArr = time.split(':')
@@ -92,10 +93,10 @@ const msToTime = (duration, timeZone) => {
 
   hours = getTwoDigits(hours)
   minutes = getTwoDigits(minutes)
-  // seconds = getTwoDigits(seconds)
+  seconds = getTwoDigits(seconds)
 
-  return sign + hours + ':' + minutes
-  // return sign + hours + ':' + minutes + ':' + seconds
+  // return sign + hours + ':' + minutes
+  return sign + hours + ':' + minutes + ':' + seconds
 }
 
 /**
@@ -125,21 +126,12 @@ const msToTimeSecs = (duration, timeZone) => {
   return sign + hours + ':' + minutes + ':' + seconds
 }
 
+/**
+ * Returns a date in string format
+ * @param {any} duration duration in milliseconds
+ * @param {any} timeZone 'CET' if CET, leave empty if UTC
+ */
 const msToDate = (duration, timeZone) => {
-  const monthArray = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ]
   const date = new Date(duration)
 
   timeZone === 'CET'
@@ -148,23 +140,27 @@ const msToDate = (duration, timeZone) => {
 
   const year = date.getFullYear()
   const monthNumber = date.getMonth()
-
-  const month = monthArray[monthNumber]
-
+  const month = months[monthNumber]
   const dateNo = date.getDate()
-  const day = date.getDay()
-  // const hours = date.getHours()
-  // const minutes = date.getMinutes()
-  let hours = Math.floor((duration / (1000 * 60 * 60)) % 24)
-  let minutes = Math.floor((duration / (1000 * 60)) % 60)
-  // let seconds = Math.floor((duration / 1000) % 60)
+  const day = days[date.getDay()]
 
-  hours = getTwoDigits(hours)
-  minutes = getTwoDigits(minutes)
-  // seconds = getTwoDigits(seconds)
+  return day + ' ' + dateNo + ' ' + month
+}
 
-  return dateNo + ' ' + month + ', ' + hours + ':' + minutes
-  // return dateNo + ' ' + month + ', ' + hours + ':' + minutes + ':' + seconds
+/**
+ * Returns a year
+ * @param {any} duration duration in milliseconds
+ * @param {any} timeZone 'CET' if CET, leave empty if UTC
+ */
+const msToYear = (duration, timeZone) => {
+  timeZone === 'CET'
+    ? (duration = Math.abs(duration) + 3600000)
+    : (duration = Math.abs(duration))
+
+  const date = new Date(duration)
+  const year = date.getFullYear()
+
+  return year
 }
 
 /**

@@ -20,10 +20,7 @@ const setNewDiffTime = () => {
 
   lsSetter(timeDiff, diffs)
 
-  const txt = 'New diff saved!'
-
-  const msg =
-    '<div><h5>' + txt + '</h5></div><div><h1>' + newDiffInTime + '</h1></div>'
+  const msg = '<h5>New diff saved!</h5><h1>' + newDiffInTime + '</h1>'
 
   resetDiffTimeEditor()
   setTimeout(() => location.reload(), 1500)

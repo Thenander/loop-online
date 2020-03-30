@@ -220,6 +220,10 @@ small {
           align-items: unset;
 }
 
+#list-logs #display-list-diff {
+  text-align: right;
+}
+
 #list-logs div ul {
   list-style-type: none;
   margin: 0;
@@ -227,9 +231,7 @@ small {
 }
 
 .greenBG {
-  background-color: #28a745;
-  color: #ffffff;
-  border-color: #28a745;
+  background-color: #e9ecef;
 }
 
 #git {

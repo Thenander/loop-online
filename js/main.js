@@ -62,11 +62,17 @@ window.onload = () => {
 
 const displayLastStart = () =>
   getLastPost(timeStart) !== 0 &&
-  (displayStart.innerHTML = msToDate(getLastPost(timeStart), 'CET'))
+  (displayStart.innerHTML =
+    msToDate(getLastPost(timeStart), 'CET') +
+    ', ' +
+    msToTime(getLastPost(timeStart), 'CET'))
 
 const displayLastStop = () =>
   getLastPost(timeStop) !== 0 &&
-  (displayStop.innerHTML = msToDate(getLastPost(timeStop), 'CET'))
+  (displayStop.innerHTML =
+    msToDate(getLastPost(timeStop), 'CET') +
+    ', ' +
+    msToTime(getLastPost(timeStop), 'CET'))
 
 const displayNonStop = () => (displayStop.innerHTML = '')
 
@@ -248,7 +254,8 @@ const displayLastInsAndOutsAndDiffs = () => {
     for (let i = 0; i < arr.length; i++) {
       const stamp = arr[i]
       lString += '<li>'
-      if (stamp > 86400000) lString += msToDate(stamp, 'CET')
+      if (stamp > 86400000)
+        lString += msToDate(stamp, 'CET') + ', ' + msToTime(stamp, 'CET')
       else lString += msToTimeSecs(stamp)
       lString += '</li>'
     }
